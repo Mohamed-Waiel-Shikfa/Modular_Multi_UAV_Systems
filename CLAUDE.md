@@ -56,6 +56,13 @@ Fall 2026 target: all of L0 end to end, plus two L1 pieces (Newton–Euler force
 
 ## Simulator
 
+Two simulator repos are forked under `Mohamed-Waiel-Shikfa` and cloned as submodules. We will experiment with both until we work out which one is better:
+
+- `gym-pybullet-drones/`: fork of learnsyslab/gym-pybullet-drones (PyBullet). Own `.venv`.
+- `MuJoCo-drones-gym/`: fork of tau-intelligence/MuJoCo-drones-gym (MuJoCo). Own `.venv`.
+
+The choice between them is open. The rest of this section describes the earlier PyBullet choice.
+
 The testbed is **gym-pybullet-drones** (utiasDSL; Panerati et al., IROS 2021), MIT licence. Reasons it was chosen over the nine other environments compared in the prospectus:
 
 - runs on a laptop CPU; Isaac Sim lists an RTX 4080 with 16 GB as its minimum
