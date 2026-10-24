@@ -4,13 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Status
 
-This repository is new and holds no pipeline code yet. It is the code base for the Fall 2026 senior thesis, "Task-Oriented Modular Multi-UAV Systems". The Spring 2026 magnet-simulation code (Magnobots) was removed from its original repository and is not here. Do not recreate it unless the user asks.
+This repository is new and holds no pipeline code yet. It is the code base for the Fall 2026 senior thesis, "Task-Oriented Modular Multi-UAV Systems".
 
-The current work, from the mid-semester progress slide:
-
-- simulation environment set-up
-- parameterised module model (URDF)
-- payload and connection models
+Nothing has been built yet.
 
 Before December 2026 the goal is "Milestone 1": the level-0 pipeline running end to end (see the fidelity ladder below). No build, lint or test commands exist yet. Add them here when the environment exists. Do not invent them before then.
 
@@ -27,6 +23,8 @@ A task (a payload that must move along a motion) becomes a flying structure. Sev
 7. **Fly**: control and coordinate the assembled structure.
 
 Stages 1–5 plan and stage 6 executes the superstructure. Together they are **Level A, form the superstructure**. Stage 7 is **Level B, operate it**, including coordinating several structures.
+
+The execute and fly stages can be refined and decomposed further as needed, with notifying the user.
 
 Four shared constraints touch every stage: downwash and aerodynamics, energy and power budget, collision avoidance, and structural integrity. A choice at stage 4 must still hold at stages 6 and 7, so planning and execution are one problem, not two.
 
