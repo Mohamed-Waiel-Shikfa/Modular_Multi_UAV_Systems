@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "MuJoCo drone simulator (multi_drone_mujoco)",
+    "output": "docs/architecture-mujoco-drones/mujoco-drones.html",
+    "quality_profile": "showcase",
+    "locale": "en",
+    "repository": {
+      "url": "git@github.com:Mohamed-Waiel-Shikfa/MuJoCo-drones-gym.git",
+      "revision": "ca170dc6760d422e47ef46fb3af46f8cd20410eb",
+      "link_mode": "local-only"
+    }
+  },
+  "components": [
+    {
+      "id": "demos",
+      "type": "external",
+      "label": "render_demos.py",
+      "sublabel": "PID loop, saves GIFs",
+      "pos": [
+        40,
+        200
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "render_demos.py",
+          "line": 14,
+          "end_line": 38
+        }
+      ]
+    },
+    {
+      "id": "step",
+      "type": "backend",
+      "label": "BaseAviary.step",
+      "sublabel": "gym.Env control step",
+      "pos": [
+        280,
+        200
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 528,
+          "end_line": 598
+        }
+      ]
+    },
+    {
+      "id": "pre",
+      "type": "backend",
+      "label": "_preprocessAction",
+      "sublabel": "action to RPM by ActionType",
+      "pos": [
+        520,
+        200
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 884,
+          "end_line": 959
+        }
+      ]
+    },
+    {
+      "id": "pid",
+      "type": "backend",
+      "label": "PIDControl",
+      "sublabel": "computeControl",
+      "pos": [
+        520,
+        360
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/control/pid_control.py",
+          "line": 66,
+          "end_line": 175
+        }
+      ]
+    },
+    {
+      "id": "forces",
+      "type": "backend",
+      "label": "Per-drone forces",
+      "sublabel": "_physics + Physics mode",
+      "pos": [
+        760,
+        200
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "tag": "ground/drag/downwash",
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 548,
+          "end_line": 568
+        },
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 604,
+          "end_line": 648
+        }
+      ]
+    },
+    {
+      "id": "wind",
+      "type": "cloud",
+      "label": "WindField",
+      "sublabel": "get_force(dt, pos, vel)",
+      "pos": [
+        760,
+        360
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/wrappers/wind.py",
+          "line": 75,
+          "end_line": 115
+        },
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 569,
+          "end_line": 575
+        }
+      ]
+    },
+    {
+      "id": "mjstep",
+      "type": "backend",
+      "label": "mujoco.mj_step",
+      "sublabel": "SIM_STEPS_PER_CTRL",
+      "pos": [
+        1000,
+        200
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 577,
+          "end_line": 579
+        }
+      ]
+    },
+    {
+      "id": "meshes",
+      "type": "database",
+      "label": "cf2 .obj meshes",
+      "sublabel": "7 visual, 32 collision",
+      "pos": [
+        520,
+        40
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 27,
+          "end_line": 28
+        },
+        {
+          "path": "multi_drone_mujoco/assets/cf2/cf2_0.obj",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "xmlgen",
+      "type": "backend",
+      "label": "_generate_aviary_xml",
+      "sublabel": "N-drone MJCF string",
+      "pos": [
+        760,
+        40
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 101,
+          "end_line": 122
+        },
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 419,
+          "end_line": 430
+        }
+      ]
+    },
+    {
+      "id": "model",
+      "type": "database",
+      "label": "MjModel / MjData",
+      "sublabel": "xfrc_applied, ctrl",
+      "pos": [
+        1000,
+        40
+      ],
+      "size": [
+        150,
+        64
+      ],
+      "sources": [
+        {
+          "path": "multi_drone_mujoco/envs/base_aviary.py",
+          "line": 429,
+          "end_line": 430
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "c1",
+      "from": "demos",
+      "to": "step",
+      "label": "step(rpm)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "c2",
+      "from": "step",
+      "to": "pre",
+      "label": "action",
+      "variant": "emphasis"
+    },
+    {
+      "id": "c3",
+      "from": "pre",
+      "to": "pid",
+      "label": "VEL / PID"
+    },
+    {
+      "id": "c4",
+      "from": "pre",
+      "to": "forces",
+      "label": "RPM N\u00d74",
+      "variant": "emphasis"
+    },
+    {
+      "id": "c5",
+      "from": "forces",
+      "to": "wind",
+      "label": "+wind",
+      "variant": "dashed"
+    },
+    {
+      "id": "c6",
+      "from": "forces",
+      "to": "mjstep",
+      "label": "xfrc",
+      "variant": "emphasis"
+    },
+    {
+      "id": "c7",
+      "from": "mjstep",
+      "to": "model",
+      "label": "advance"
+    },
+    {
+      "id": "c8",
+      "from": "meshes",
+      "to": "xmlgen",
+      "label": "mesh paths"
+    },
+    {
+      "id": "c9",
+      "from": "xmlgen",
+      "to": "model",
+      "label": "from_xml"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Physics modes",
+      "items": [
+        "MJC: thrust and torque via xfrc_applied, then mj_step",
+        "DYN: explicit integration, mj_step skipped",
+        "MJC_GND / DRAG / DW add ground effect, drag, downwash"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Around the core (not drawn)",
+      "items": [
+        "Wrappers: domain randomization, curriculum, obstacles, wind",
+        "SharedRenderVecEnv: one GL context for many envs",
+        "MultiAgentAviary: PettingZoo-style parallel API",
+        "Task envs: Hover, Race, Formation, FlyThrough, Velocity"
+      ]
+    }
+  ]
+}

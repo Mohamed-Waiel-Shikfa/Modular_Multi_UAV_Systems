@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "gym-pybullet-drones simulator architecture",
+    "output": "docs/architecture-pybullet-drones/pybullet-drones.html",
+    "quality_profile": "showcase",
+    "locale": "en",
+    "repository": { "url": "git@github.com:Mohamed-Waiel-Shikfa/gym-pybullet-drones.git", "provider": "github", "link_mode": "local-only", "revision": "f83fbdd4ee1c07e1afa52694963f3a9a889a0f56" }
+  },
+  "components": [
+    { "id": "ctrl-ctrls", "type": "backend", "label": "DSLPID / MRAC", "sublabel": "position controllers", "tag": "BaseControl", "pos": [330, 40], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/control/DSLPIDControl.py", "line": 9, "end_line": 155 }, { "path": "gym_pybullet_drones/control/MRACControl.py", "line": 12, "end_line": 60 }, { "path": "gym_pybullet_drones/control/BaseControl.py", "line": 55, "end_line": 110 } ] },
+    { "id": "ex-ctrl", "type": "frontend", "label": "Control examples", "sublabel": "pid, pid_velocity, mrac", "tag": "+ downwash.py", "pos": [40, 200], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/examples/pid.py", "line": 101, "end_line": 148 }, { "path": "gym_pybullet_drones/examples/mrac.py", "line": 50, "end_line": 111 }, { "path": "gym_pybullet_drones/examples/pid_velocity.py", "line": 76, "end_line": 140 } ] },
+    { "id": "env-ctrl", "type": "backend", "label": "CtrlAviary", "sublabel": "VelocityAviary", "tag": "RPM / velocity in", "pos": [620, 200], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/CtrlAviary.py", "line": 7, "end_line": 143 }, { "path": "gym_pybullet_drones/envs/VelocityAviary.py", "line": 9, "end_line": 170 } ] },
+    { "id": "ex-learn", "type": "frontend", "label": "learn.py", "sublabel": "RL training script", "pos": [40, 360], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/examples/learn.py", "line": 55, "end_line": 101 } ] },
+    { "id": "ppo", "type": "external", "label": "SB3 PPO", "sublabel": "MlpPolicy + EvalCallback", "pos": [330, 360], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/examples/learn.py", "line": 73, "end_line": 101 } ] },
+    { "id": "env-rl", "type": "backend", "label": "Hover / MultiHover", "sublabel": "via BaseRLAviary", "tag": "obs/act types", "pos": [620, 360], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/BaseRLAviary.py", "line": 11, "end_line": 240 }, { "path": "gym_pybullet_drones/envs/HoverAviary.py", "line": 6, "end_line": 132 }, { "path": "gym_pybullet_drones/envs/MultiHoverAviary.py", "line": 6, "end_line": 145 } ] },
+    { "id": "base", "type": "backend", "label": "BaseAviary.step", "sublabel": "Physics mode switch", "tag": "gym.Env", "pos": [910, 360], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/BaseAviary.py", "line": 258, "end_line": 384 }, { "path": "gym_pybullet_drones/envs/BaseAviary.py", "line": 676, "end_line": 875 } ] },
+    { "id": "pybullet", "type": "external", "label": "PyBullet", "sublabel": "GUI or DIRECT client", "pos": [1200, 360], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/BaseAviary.py", "line": 145, "end_line": 170 }, { "path": "gym_pybullet_drones/envs/BaseAviary.py", "line": 367, "end_line": 369 } ] },
+    { "id": "ex-beta", "type": "frontend", "label": "beta.py", "sublabel": "SITL trajectory demo", "pos": [40, 520], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/examples/beta.py", "line": 68, "end_line": 165 } ] },
+    { "id": "env-beta", "type": "backend", "label": "BetaAviary", "sublabel": "launches SITL procs", "pos": [620, 520], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/BetaAviary.py", "line": 19, "end_line": 116 }, { "path": "gym_pybullet_drones/envs/BetaAviary.py", "line": 117, "end_line": 181 } ] },
+    { "id": "urdf", "type": "database", "label": "URDF assets", "sublabel": "cf2x, cf2p, racer", "pos": [910, 520], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/BaseAviary.py", "line": 483, "end_line": 490 }, { "path": "gym_pybullet_drones/envs/BaseAviary.py", "line": 982, "end_line": 990 } ] },
+    { "id": "ctbr", "type": "backend", "label": "CTBRControl", "sublabel": "thrust + body rates", "pos": [40, 680], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/control/CTBRControl.py", "line": 13, "end_line": 120 } ] },
+    { "id": "sitl", "type": "external", "label": "Betaflight SITL", "sublabel": "one ELF per drone", "pos": [620, 680], "size": [170, 64],
+      "sources": [ { "path": "gym_pybullet_drones/envs/BetaAviary.py", "line": 86, "end_line": 112 } ] }
+  ],
+  "connections": [
+    { "id": "ex-to-ctrl", "from": "ex-ctrl", "to": "ctrl-ctrls", "label": "target to RPM" },
+    { "id": "ex-to-env", "from": "ex-ctrl", "to": "env-ctrl", "label": "env.step(RPM)", "variant": "emphasis" },
+    { "id": "env-ctrl-base", "from": "env-ctrl", "to": "base", "label": "extends" },
+    { "id": "learn-ppo", "from": "ex-learn", "to": "ppo", "label": "model.learn" },
+    { "id": "ppo-env", "from": "ppo", "to": "env-rl", "label": "env.step", "variant": "emphasis" },
+    { "id": "rl-base", "from": "env-rl", "to": "base", "label": "extends" },
+    { "id": "base-pyb", "from": "base", "to": "pybullet", "label": "forces, step", "variant": "emphasis" },
+    { "id": "base-urdf", "from": "base", "to": "urdf", "label": "loadURDF" },
+    { "id": "beta-env", "from": "ex-beta", "to": "env-beta", "label": "step(action, i)" },
+    { "id": "betaenv-base", "from": "env-beta", "to": "base", "label": "extends" },
+    { "id": "beta-ctbr", "from": "ex-beta", "to": "ctbr", "label": "CTBR cmd" },
+    { "id": "beta-sitl", "from": "env-beta", "to": "sitl", "label": "UDP 9002-9004", "variant": "dashed" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Physics modes (BaseAviary.step)", "items": ["PYB: _physics applies per-motor forces and drag torque, then p.stepSimulation", "DYN: _dynamics integrates explicitly; PyBullet only resets pose", "PYB_GND / PYB_DRAG / PYB_DW add ground effect, drag, downwash; PYB_GND_DRAG_DW adds all three"] },
+    { "dot": "emerald", "title": "Embedded controllers", "items": ["VelocityAviary builds DSLPIDControl per drone to turn velocity into RPM", "BaseRLAviary builds DSLPIDControl for PID, VEL and ONE_D_PID action types", "BaseRLAviary also handles RPM and ONE_D_RPM directly"] },
+    { "dot": "amber", "title": "Logging", "items": ["Every example creates a Logger (default folder results/)", "Logger.save writes .npz; save_as_csv writes per-state CSVs; plot uses matplotlib", "learn.py saves best_model.zip and final_model.zip via SB3"] },
+    { "dot": "rose", "title": "Betaflight SITL over UDP", "items": ["BetaAviary sends FDM state (port 9003+10i) and RC (9004+10i)", "Receives PWM motor packets on 9002+10i, then converts to RPM", "SITL binaries come from betaflight_sitl/bf<i>/, not in this repo"] }
+  ]
+}

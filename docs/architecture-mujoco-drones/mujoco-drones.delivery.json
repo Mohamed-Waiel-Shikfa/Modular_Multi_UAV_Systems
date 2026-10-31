@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "42066298-afaf-48ba-af0c-fb8964752efa",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/pocoyo/Documents/CMUQ/research/Modulare_Robotic_Research/Modular_Multi_UAV_Systems/codebase/docs/architecture-mujoco-drones/candidate.json",
+  "output": "/home/pocoyo/Documents/CMUQ/research/Modulare_Robotic_Research/Modular_Multi_UAV_Systems/codebase/docs/architecture-mujoco-drones/mujoco-drones.html",
+  "specification": {
+    "sha256": "78eb073d5e2637429df664ce61d067677637a0908218efaab4c70e46502e66cb",
+    "bytes": 6588
+  },
+  "artifact": {
+    "sha256": "c957fabbea7551384a59ff877fd9f034e06f8d52f5899c28b1f49dc83657a986",
+    "bytes": 846853
+  }
+}

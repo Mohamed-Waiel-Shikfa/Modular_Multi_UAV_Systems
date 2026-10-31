@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "e67e67a2-4ea2-4114-afa7-e26b0def6f2d",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/home/pocoyo/Documents/CMUQ/research/Modulare_Robotic_Research/Modular_Multi_UAV_Systems/codebase/docs/architecture-pybullet-drones/candidate.json",
+  "output": "/home/pocoyo/Documents/CMUQ/research/Modulare_Robotic_Research/Modular_Multi_UAV_Systems/codebase/docs/architecture-pybullet-drones/pybullet-drones.html",
+  "specification": {
+    "sha256": "05c1e296229e79e4deca0e8e787ed0bcfb3e68fc49eb0b6df15a4c678d2943ce",
+    "bytes": 6993
+  },
+  "artifact": {
+    "sha256": "f6f3cddeb4af58a5e13b882ae36145a7c27e35bf5394df9a51556631d14ff9ab",
+    "bytes": 856702
+  }
+}

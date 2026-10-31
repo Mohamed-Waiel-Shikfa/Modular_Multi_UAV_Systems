@@ -24,8 +24,6 @@ The simulator is [gym-pybullet-drones](https://github.com/utiasDSL/gym-pybullet-
 
 This is the start of the project. The repository holds documentation and the licence, and no pipeline code yet. The current work is the simulation environment, a parameterised module model, and payload and connection models.
 
-Earlier magnet-simulation code from the Spring 2026 Magnobots work is no longer in this repository. The licence restricts use of that work to verifying the author's thesis results.
-
 ## Files
 
 - `README.md`: this file.
