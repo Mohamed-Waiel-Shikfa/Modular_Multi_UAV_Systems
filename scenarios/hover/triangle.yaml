@@ -1,0 +1,10 @@
+# hover/triangle: one triangle-caged CF2X hovers at 1 m on the simulator's stock PID, gains untouched
+#   (DSLPIDControl in PyBullet, PIDControl in MuJoCo). Checks the module model flies.
+#
+#   python simulate.py --scenario scenarios/hover/triangle.yaml --sim mujoco
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+
+task: hover
+cage: triangle
+hover_target: [0.0, 0.0, 1.0]
+hover_duration: 10.0

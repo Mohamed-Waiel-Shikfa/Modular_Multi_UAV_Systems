@@ -1,0 +1,12 @@
+# tetra/run_all: every base scenario of the tetra cage, flying at the same time in one simulation, side by side.
+#
+#   python simulate.py --scenario scenarios/tetra/run_all.yaml --gui
+#   python simulate.py --scenario scenarios/tetra/run_all.yaml --circle
+# Fields set here (and flags) apply to every included scenario; run, physics, plume and logging
+# fields always come from here. Exit code 0 means every check of every scenario passed.
+
+task: dock
+include:
+  - scenarios/tetra/10/base.yaml
+  - scenarios/tetra/4/base.yaml
+  - scenarios/tetra/recursive/base.yaml

@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- Template of docs/fields.html. Edit this file, not docs/fields.html; regenerate with
+     `python -m modular_uav.config.master`. The registry (fields.py) is inlined at the DATA marker. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>simulate.py fields</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #F2F4F5; --sheet: #FFFFFF; --ink: #18202B; --slate: #5A6675; --rule: #D5DADF;
+  --accent: #2747A3; --mark: #FFE58A; --chip: #E7EBF0;
+  --sans: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11151B; --sheet: #171C23; --ink: #E3E7EC; --slate: #97A2B0; --rule: #2A313B;
+    --accent: #93AEFF; --mark: #5C4A00; --chip: #222934;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11151B; --sheet: #171C23; --ink: #E3E7EC; --slate: #97A2B0; --rule: #2A313B;
+  --accent: #93AEFF; --mark: #5C4A00; --chip: #222934;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 var(--sans); }
+a { color: var(--accent); }
+.wrap { display: grid; grid-template-columns: 15rem minmax(0, 1fr); max-width: 72rem; margin: 0 auto; }
+nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 1.25rem 2rem 1rem; }
+nav h1 { font: 600 1.05rem/1.3 var(--sans); margin: 0 0 .25rem; }
+nav p { color: var(--slate); font-size: .85rem; margin: 0 0 1.5rem; }
+nav h2 { font: 500 .85rem var(--sans); color: var(--slate); margin: 1.5rem 0 .5rem; }
+nav ol { list-style: none; margin: 0; padding: 0; }
+nav li a { display: flex; justify-content: space-between; padding: .2rem .5rem; margin: 0 -.5rem; border-radius: 4px;
+  color: var(--ink); text-decoration: none; font-size: .9rem; }
+nav li a:hover { background: var(--chip); }
+nav li a span { color: var(--slate); font-variant-numeric: tabular-nums; }
+nav li a.empty { color: var(--slate); opacity: .5; }
+.cages { display: flex; flex-wrap: wrap; gap: .35rem; }
+.cages button { font: 400 .85rem var(--mono); padding: .2rem .55rem; border: 1px solid var(--rule); background: var(--sheet);
+  color: var(--ink); border-radius: 999px; cursor: pointer; }
+.cages button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.layouts { font: .8rem/1.5 var(--mono); color: var(--slate); margin-top: .6rem; min-height: 2.4em; }
+main { padding: 2rem 1rem 6rem 2rem; border-left: 1px solid var(--rule); min-height: 100vh; }
+.search { position: sticky; top: 0; background: var(--paper); padding: .75rem 0 1rem; z-index: 2; }
+.search input { width: 100%; font: 400 1.35rem var(--mono); padding: .7rem .9rem; color: var(--ink);
+  background: var(--sheet); border: 1.5px solid var(--rule); border-radius: 6px; }
+.search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+.status { color: var(--slate); font-size: .85rem; margin-top: .45rem; display: flex; justify-content: space-between; gap: 1rem; }
+kbd { font: .8rem var(--mono); border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 3px; padding: 0 .3rem; }
+section { margin-top: 2rem; }
+section h2 { font: 600 1.15rem/1.3 var(--sans); margin: 0; scroll-margin-top: 7rem; }
+section > p { color: var(--slate); margin: .15rem 0 .5rem; }
+dl { margin: 0; }
+.row { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr); gap: .25rem 1.5rem;
+  padding: .8rem 0; border-top: 1px solid var(--rule); }
+dt { min-width: 0; }
+dt button { font: 500 .95rem var(--mono); color: var(--accent); background: none; border: 0; padding: 0; cursor: copy;
+  text-align: left; overflow-wrap: anywhere; }
+dt button:focus-visible, .cages button:focus-visible, nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+dt .kind { display: block; font: .8rem var(--mono); color: var(--slate); overflow-wrap: anywhere; }
+dd { margin: 0; max-width: 62ch; }
+dd .meta { display: flex; flex-wrap: wrap; gap: .35rem .6rem; margin-top: .35rem; font-size: .85rem; color: var(--slate); }
+dd code { font: .85rem var(--mono); background: var(--chip); color: var(--ink); padding: .05rem .35rem; border-radius: 3px; }
+mark { background: var(--mark); color: inherit; border-radius: 2px; }
+.copied { font: .8rem var(--mono); color: var(--slate); }
+.none { padding: 3rem 0; color: var(--slate); }
+@media (max-width: 760px) {
+  .wrap { grid-template-columns: 1fr; }
+  nav { position: static; height: auto; padding: 1.5rem 16px 0; }
+  nav ol { columns: 2; }
+  main { border-left: 0; padding: 0 16px 4rem; }
+  .row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Field groups">
+    <h1>simulate.py fields</h1>
+    <p>Each field is a scenario YAML key and a flag of the same name. Flag beats file beats default.</p>
+    <h2>Groups</h2>
+    <ol id="groups"></ol>
+    <h2>Cage</h2>
+    <div class="cages" id="cages" role="group" aria-label="Show fields for one cage"></div>
+    <div class="layouts" id="layouts"></div>
+  </nav>
+  <main>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search fields: downwash, rows, tilt…" aria-label="Search fields" autocomplete="off" spellcheck="false">
+      <div class="status"><span id="count"></span><span>Press <kbd>/</kbd> to search, <kbd>Esc</kbd> to clear. Click a name to copy its flag.</span></div>
+    </div>
+    <div id="list"></div>
+  </main>
+</div>
+<script>
+const D = /*DATA*/;
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+let cage = "all";
+
+function hl(text, words) {
+  let s = esc(text);
+  for (const w of words) {
+    if (!w) continue;
+    s = s.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")(?![^<]*>)", "gi"), "<mark>$1</mark>");
+  }
+  return s;
+}
+
+function render() {
+  const words = $("q").value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const keep = f => (cage === "all" || !f.cages.length || f.cages.includes(cage)) &&
+    words.every(w => [f.name, f.group, f.help, f.default, ...f.choices, ...f.cages].join(" ").toLowerCase().includes(w));
+  let html = "", total = 0, nav = "";
+  for (const [g, title] of Object.entries(D.groups)) {
+    const fs = D.fields.filter(f => f.group === g && keep(f));
+    total += fs.length;
+    nav += `<li><a href="#g-${g}" class="${fs.length ? "" : "empty"}">${g}<span>${fs.length}</span></a></li>`;
+    if (!fs.length) continue;
+    html += `<section><h2 id="g-${g}">${g}</h2><p>${esc(title)}</p><dl>` + fs.map(f => {
+      const choices = f.choices.length ? `<span>choices ${f.choices.map(c => `<code>${hl(c, words)}</code>`).join(" ")}</span>` : "";
+      const only = f.cages.length ? `<span>${f.cages.join(", ")} only</span>` : "";
+      return `<div class="row"><dt><button data-f="${f.name}" title="Copy --${f.name} ${esc(f.default)}">--${hl(f.name, words)}</button>` +
+        `<span class="kind">${esc(f.kind)}</span></dt><dd>${hl(f.help, words)}<div class="meta">` +
+        `<span>default <code>${hl(f.default, words)}</code></span>${choices}${only}</div></dd></div>`;
+    }).join("") + "</dl></section>";
+  }
+  $("list").innerHTML = html || `<p class="none">No field matches “${esc(words.join(" "))}”. Clear the search or pick another cage.</p>`;
+  $("groups").innerHTML = nav;
+  $("count").textContent = `${total} of ${D.fields.length} fields`;
+  $("layouts").textContent = cage === "all" ? "" : "layouts: " + D.layouts[cage].join(", ");
+}
+
+$("cages").innerHTML = ["all", ...D.cages].map(c => `<button aria-pressed="${c === "all"}" data-c="${c}">${c}</button>`).join("");
+$("cages").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  cage = b.dataset.c;
+  for (const x of $("cages").children) x.setAttribute("aria-pressed", x === b);
+  render();
+});
+$("q").addEventListener("input", render);
+$("list").addEventListener("click", async e => {
+  const b = e.target.closest("button[data-f]"); if (!b) return;
+  const f = D.fields.find(x => x.name === b.dataset.f);
+  const text = `--${f.name} ${f.default}`;
+  try { await navigator.clipboard.writeText(text); } catch (_) { return; }
+  const note = document.createElement("span");
+  note.className = "copied"; note.textContent = ` copied ${text} (YAML: ${f.name}: ${f.default})`;
+  b.parentNode.querySelector(".copied")?.remove();
+  b.after(note); setTimeout(() => note.remove(), 2500);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement !== $("q")) { e.preventDefault(); $("q").focus(); }
+  if (e.key === "Escape") { $("q").value = ""; render(); $("q").blur(); }
+});
+render();
+</script>
+</body>
+</html>

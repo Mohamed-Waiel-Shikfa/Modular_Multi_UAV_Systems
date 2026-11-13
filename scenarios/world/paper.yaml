@@ -1,0 +1,18 @@
+# world/paper: the six Dodecacopter configurations of Garanger et al. 2026 (Fig. 13), flying at the
+#   same time in one simulation, side by side: quadrotor, hexarotor, 6-DOF hexarotor, tetrahedron
+#   quadrotor, decarotor and hexadecarotor. 46 modules; each keeps its own phases and checks.
+#
+#   python simulate.py --scenario scenarios/world/paper.yaml --gui
+#   python simulate.py --scenario scenarios/world/paper.yaml --circle --live_plot
+# Fields set here (and flags) apply to every included scenario; run, physics, plume and logging
+# fields always come from here. Exit code 0 means every check of every scenario passed.
+
+task: dock
+include:
+  - scenarios/dodeca/quad/base.yaml
+  - scenarios/dodeca/hexa/base.yaml
+  - scenarios/dodeca/hexa6dof/base.yaml
+  - scenarios/dodeca/tetraquad/base.yaml
+  - scenarios/dodeca/tetradeca/base.yaml
+  - scenarios/dodeca/tetrahexadeca/base.yaml
+hover_t: 5.0   # the stacked ones need it (downwash sag); harmless for the flat ones

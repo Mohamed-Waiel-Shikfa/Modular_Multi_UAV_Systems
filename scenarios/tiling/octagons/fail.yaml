@@ -1,0 +1,19 @@
+# tiling/octagons/fail: 4.8.8 (truncated square) tiling: 9 modules, octagons (2.6 kg, drone scale 4.6) and squares
+#   (212 g) docked face to face.
+# Mission: dock, hover, climb to fail_z; chosen modules drop to `outage` x their thrust for outage_t,
+#   the assembly recovers, hovers final_t and lands.
+#
+#   python simulate.py --scenario scenarios/tiling/octagons/fail.yaml
+#   python simulate.py --scenario scenarios/tiling/octagons/fail.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/tiling/octagons/fail.yaml --size 2
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: tiling
+tiling: 4.8.8
+layout: rings
+size: 1
+drone_scale: fit   # every tile carries the largest Froude-scaled CF2X that fits it
+failure: true
+fail_mask: edge   # module 3, an octagon

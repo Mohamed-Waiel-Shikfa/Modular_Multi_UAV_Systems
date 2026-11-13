@@ -1,0 +1,20 @@
+# dodeca/hexa6dof/circle: Dodecacopter 6-DOF hexarotor (Fig. 13c): the hexarotor ring with every rotor axis tilted
+#   41.8 deg onto a neighbouring cage vertex, tangential tilt alternating around the ring.
+#   Modules dock upright and are turned at the snap.
+# Mission: dock, hover, fly `laps` laps of a horizontal circle of `radius`, land.
+#
+#   python simulate.py --scenario scenarios/dodeca/hexa6dof/circle.yaml
+#   python simulate.py --scenario scenarios/dodeca/hexa6dof/circle.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/dodeca/hexa6dof/circle.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: dodeca
+layout: hexagon
+size: 2
+fill: frame
+tilt: alternate
+circle: true
+radius: 1.0
+laps: 2

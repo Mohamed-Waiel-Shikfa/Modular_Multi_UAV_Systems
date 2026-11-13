@@ -1,0 +1,15 @@
+# triangle/edge3/base: Three triangle-caged modules in a triangle (1 + 2), all pointing +y; neighbours share a
+#   vertical cage edge.
+# Mission: dock in the air, hover, land.
+#
+#   python simulate.py --scenario scenarios/triangle/edge3/base.yaml
+#   python simulate.py --scenario scenarios/triangle/edge3/base.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/triangle/edge3/base.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: triangle
+triangle_connect: edge
+layout: triangle
+size: 2

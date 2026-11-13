@@ -1,0 +1,15 @@
+# dodeca/hexa/base: Dodecacopter hexarotor (Fig. 13b): six dodecahedron-caged modules in a ring, the outline
+#   of a hexagon of side 2 (fill: frame); neighbours share two vertices. size n: ring of 6(n - 1).
+# Mission: dock in the air, hover, land.
+#
+#   python simulate.py --scenario scenarios/dodeca/hexa/base.yaml
+#   python simulate.py --scenario scenarios/dodeca/hexa/base.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/dodeca/hexa/base.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: dodeca
+layout: hexagon
+size: 2
+fill: frame

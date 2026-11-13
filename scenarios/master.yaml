@@ -1,0 +1,328 @@
+# master.yaml: every field the master script understands, at its default value.
+#
+# What it is: the reference for all scenario files and command-line flags. Each key
+#   here is also a flag of the same name: `meet_z: 1.2` in a file is `--meet_z 1.2`
+#   on the command line. Precedence: flag > scenario file > default (this file).
+# How to use it: copy the keys you want to change into a scenario file, or run it
+#   as is (a 3 x 3 box grid docks, hovers and lands in PyBullet):
+#     python simulate.py --scenario scenarios/master.yaml
+# Generated from modular_uav/config/fields.py by `python -m modular_uav.config.master`.
+#   Edit fields.py, not this file. Units: m, s, rad unless a name says _deg, _cm or _hz.
+
+# ------------------------------------------------------------------------------
+# run: What to run and how to show it
+# ------------------------------------------------------------------------------
+# dock: modules take off, dock into `layout` and fly the mission. hover: one module hovers
+# on the simulator's stock PID (checks the cage model)  [choices: dock, hover]
+task: dock
+# simulator backend: pybullet (gym-pybullet-drones), mujoco (MuJoCo-drones-gym), or both:
+# run the scenario in each, then plot how far apart the two runs are over time
+# (diff_<name>.png in output_folder)  [choices: pybullet, mujoco, both]
+sim: pybullet
+# open the simulator viewer and run in real time
+gui: false
+# Hz, physics and control rate of the dock task (one physics step per control step)
+freq: 240
+# s of sim time, hard stop of a run
+max_t: 900.0
+# s of sim time between status lines (0 = no status lines)
+print_every: 0.5
+# save video with the simulator's own recorder into output_folder (PyBullet: mp4, needs
+# gui; MuJoCo: PNG frames)
+record: false
+# folder for logs, plots and recordings
+output_folder: results
+
+# ------------------------------------------------------------------------------
+# world: Several scenarios in one simulation, side by side
+# ------------------------------------------------------------------------------
+# scenario files to run together in this simulation, side by side (each keeps its own
+# fields; this file's other fields and the flags override them all; run, physics, plume
+# and logging fields come from here only). Empty: just this scenario
+include: []
+# m, clear space between the footprints of included scenarios (their staging, circles and
+# assemblies), which are laid out on a square-ish grid, so they share the space without
+# touching or feeling each other's downwash
+include_gap: 0.5
+
+# ------------------------------------------------------------------------------
+# physics: Simulator physics and the downwash model
+# ------------------------------------------------------------------------------
+# aero effects on top of rotor thrust: base (none), gnd (ground effect), drag, dw
+# (downwash) or gnd_drag_dw (all three). Maps to the simulator's Physics enum (PYB_* /
+# MJC_*)  [choices: base, gnd, drag, dw, gnd_drag_dw]
+physics: gnd_drag_dw
+# original: the simulator's own _downwash, untouched (singular when two modules are at
+# equal height). regularised: ours, with the three bounds below (see docs/dock.md, 'Fix:
+# regularised downwash')  [choices: original, regularised]
+downwash_model: regularised
+# regularised only: cap the downwash peak at the upper module's thrust
+dw_thrust_cap: true
+# m, regularised only: downwash fades in linearly over this height below the upper rotor
+# plane (0 = no ramp)
+dw_dz_ramp: 0.05
+# m, regularised only: floor on the plume width beta. null = the module's arm length L; 0
+# = no floor
+dw_min_width: null
+# contact between modules: off (none), all (every pair; docked cages touch, so contact
+# fights the welds) or undocked (every pair except those whose cages touch in the docked
+# structure)  [choices: off, all, undocked]
+module_collisions: undocked
+
+# ------------------------------------------------------------------------------
+# module: The caged module (a CF2X inside a rigid rod cage)
+# ------------------------------------------------------------------------------
+# cage around each CF2X: box (docked face to face, or half a face between offset rows),
+# tetra (regular tetrahedron, docked vertex to vertex), triangle (triangular prism, see
+# triangle_connect), hex (hexagonal prism, docked face to face), dodeca (regular
+# dodecahedron, docked as in the Dodecacopter: two shared vertices, coplanar faces),
+# tiling (a mix of polygon prisms, see `tiling`) or none (bare CF2X, task: hover only)
+# [choices: box, tetra, triangle, hex, dodeca, tiling, none]
+cage: box
+# tiling cages: an edge-to-edge tiling of regular polygons, named by the polygons round
+# each vertex. 3.4.6.4 triangles + squares + hexagons, 3.6.3.6 triangles + hexagons,
+# 3.3.3.4.4 and 3.3.4.3.4 triangles + squares, 4.8.8 squares + octagons, 4.6.12 squares +
+# hexagons + 12-gons, 3.12.12 triangles + 12-gons; 4.4.4.4, 3.3.3.3.3.3, 6.6.6 one
+# polygon. Every tile is a module, an n-gon prism docked face to face  [choices: 3.4.6.4,
+# 4.4.4.4, 3.3.3.3.3.3, 6.6.6, 3.6.3.6, 3.3.3.4.4, 3.3.4.3.4, 4.8.8, 4.6.12, 3.12.12]
+tiling: 3.4.6.4
+# m, tiling cages: polygon edge shared by every tile (0.23 fits a CF2X in a triangle)
+tile_edge: 0.23
+# kg/m, tiling cages: rod mass per metre (a 120 mm box cage of 3 g has 2.6 g/m)
+rod_density: 0.0026
+# drone size, as a Froude scale k of the CF2X: lengths x k, mass x k^3, thrust coefficient
+# x k^4 (same thrust-to-weight). A number, or fit: each module type gets the largest drone
+# that clears its cage by cage_clearance (so big tiles carry big drones)
+drone_scale: '1'
+# cage RGBA, e.g. 0.9,0.9,0.9,1. null: one colour per module type (amber, teal, pink,
+# ...), so mixed modules stand out
+cage_color: null
+# m, box cage x, y, z size (x and y are also the slot pitch)
+box_size: [0.12, 0.12, 0.05]
+# m, tetra cage edge (also the neighbour distance in a pyramid)
+tetra_edge: 0.31
+# m, triangle cage edge
+triangle_edge: 0.23
+# edge: every module points the same way (one vertex on +y) and neighbours share a
+# vertical cage edge, one edge length apart. face: modules alternate pointing +y and -y
+# (turned 180 deg about z) and neighbours share a full face, edge / sqrt(3) apart
+# [choices: edge, face]
+triangle_connect: edge
+# m, hex cage edge (neighbour distance = sqrt(3) x edge, flat to flat)
+hex_edge: 0.07
+# m, height of the triangle and hex prisms
+prism_height: 0.05
+# m, dodeca cage edge (neighbour distance = sqrt(2) x golden ratio x edge)
+dodeca_edge: 0.06
+# dodeca: none (every rotor axis vertical) or alternate: each module off the assembly's
+# vertical axis turns onto a cage symmetry that tilts its rotor axis 41.8 deg onto a
+# neighbouring cage vertex, picked so that the tangential tilt alternates in sign around
+# the centre (the 6-DOF hexarotor of Garanger et al. 2026). Modules dock upright and are
+# turned at the snap  [choices: none, alternate]
+tilt: none
+# kg, whole cage, spread over the rods by length
+cage_mass: 0.003
+# m, rod radius (visual and collision)
+cage_rod_radius: 0.001
+# m, the cage must clear every CF2 mesh vertex by at least this
+cage_clearance: 0.005
+
+# ------------------------------------------------------------------------------
+# layout: The structure the modules dock into
+# ------------------------------------------------------------------------------
+# shape the modules dock into, `size` sets how big. Flat: rows (the `rows` field), square
+# (size x size), triangle (side size), rhombus (side size), hexagon (side size). 3-D
+# (tetra, dodeca): pyramid (tetrahedral stack, size layers). Tilings: rings (the centre
+# tile and `size` rings of docked neighbours)  [choices: rows, square, triangle, rhombus,
+# hexagon, pyramid, rings]
+layout: square
+# layout size: side length in modules, or layers of a pyramid
+size: 3
+# layout rows: modules per row, top (+y) row first, every row centred. Box: rows of equal
+# parity line up (full faces), others sit half a cage off (half faces). Triangular
+# lattices (hex, dodeca, triangle): rows always sit half a slot off; a row with the parity
+# of the one above shifts half a slot to +x. Face-docked triangles: counts are triangles
+# per row
+rows: [2, 3, 2]
+# which modules of the shape to keep: solid (all), hollow (those on the convex hull's
+# boundary: a flat shape's outline, a 3-D shape's surface) or frame (those on the hull's
+# edges: the outline, or a 3-D shape's edge skeleton). hexagon 2 + frame = ring of 6
+# [choices: solid, hollow, frame]
+fill: solid
+# levels of self-similar repetition of the (filled) shape: each level puts a copy at every
+# module, scaled up just enough not to overlap. triangle 2 -> Sierpinski triangle (3^L),
+# pyramid 2 -> Sierpinski tetrahedron (4^L), square 3 + frame -> Sierpinski carpet (8^L)
+fractal: 1
+
+# ------------------------------------------------------------------------------
+# approach: Approach, snap (docking) and first hover
+# ------------------------------------------------------------------------------
+# m, ground distance between neighbouring module centres at the start
+start_spacing: 0.5
+# m, start height of the module CoMs. null = resting on the cage bottom (box, triangle,
+# hex 0.03; tetra 0.07; dodeca 0.09)
+z0: null
+# m, distance between neighbouring module centres at the staging points, where the modules
+# hold before they close in to dock (the layout scaled up). Never less than stage_gap
+# between the cages' bounding spheres, so the default is the tightest spread stage_gap
+# allows
+stage_spacing: 0.01
+# m, least clearance between neighbouring cages' bounding spheres at the staging points;
+# raise it for a wider spread, lower it (even 0) for a tighter one
+stage_gap: 0.05
+# m, docking height of the assembly CoM
+meet_z: 1.0
+# m, lowest cage height at the staging points
+stage_clearance: 0.3
+# s, climb from the ground to the staging points
+rise_t: 3.0
+# s, contract from the staging points to the slots
+close_t: 4.0
+# m, every docked pair within this of its slot offset triggers the welds
+snap_gap: 0.03
+# s after rise_t + close_t without a snap: the run stops and fails
+snap_timeout: 5.0
+# s, hover at meet_z after the snap
+hover_t: 1.0
+
+# ------------------------------------------------------------------------------
+# failure: Failure segment: chosen modules lose thrust mid-flight
+# ------------------------------------------------------------------------------
+# add the failure segment: climb to fail_z, hold, failure, recover, final hover
+failure: false
+# failing modules, one 0/1 per module in map order (1,0,0 or [1, 0, 0] or 100), or edge =
+# the -x edge of the bottom layer
+fail_mask: edge
+# m, climb or descend here before the failure
+fail_z: 1.0
+# s, hover at fail_z before the failure
+hold_t: 1.0
+# fraction of commanded thrust a failing module keeps (0 = motors off)
+outage: 0.5
+# s, failure duration
+outage_t: 0.5
+# s, hover after recovery, before landing
+final_t: 3.0
+# m, 'stable' after a failure: position error below this
+recover_pos_tol: 0.05
+# m/s, 'stable': speed below this
+recover_vel_tol: 0.05
+# deg, 'stable': tilt below this
+recover_tilt_deg: 3.0
+# rad/s, 'stable': body rate below this
+recover_rate_tol: 0.1
+
+# ------------------------------------------------------------------------------
+# circle: Circle segment: the assembly flies laps of a horizontal circle
+# ------------------------------------------------------------------------------
+# add the circle segment after the hover (and after the failure segment)
+circle: false
+# m, circle radius
+radius: 1.0
+# laps around the circle
+laps: 2.0
+# s, average time per lap (speed follows 1 - cos, peak = 2 x average)
+lap_t: 10.0
+
+# ------------------------------------------------------------------------------
+# land: Climb and landing
+# ------------------------------------------------------------------------------
+# m/s, climb or descent to fail_z
+climb_rate: 1.0
+# m/s, descent speed above land_slow_below
+land_speed: 1.0
+# m/s, descent speed below land_slow_below
+land_speed_low: 0.3
+# m, height where the descent slows down
+land_slow_below: 1.0
+
+# ------------------------------------------------------------------------------
+# controller: Geometric SE(3) controller gains (per module before the snap, assembly after)
+# ------------------------------------------------------------------------------
+# rad/s, assembly position loop natural frequency
+pos_wn: 2.5
+# rad/s, per-module position loop during the approach (stiffer: pushes into the downwash
+# of modules above)
+module_wn: 4.0
+# position loop damping ratio
+pos_zeta: 0.9
+# integral gain KI = ki_ratio wn^3 (s^-3), removes the steady downwash sag. 0 = PD only
+ki_ratio: 0.256
+# at the snap, start the assembly integral at the mean module integral (keeps the downwash
+# already learnt)
+carry_integral: true
+# rad/s, attitude loop natural frequency, roll and pitch
+att_wn_rp: 20.0
+# rad/s, attitude loop natural frequency, yaw
+att_wn_yaw: 8.0
+# attitude loop damping ratio
+att_zeta: 0.8
+# how the assembly controller shares thrust when rotors differ (mixed drone sizes, tilted
+# rotors): capacity (each rotor in proportion to its maximum thrust, so all saturate
+# together) or equal (least-norm thrusts). Identical upright modules keep the prioritised
+# allocation  [choices: capacity, equal]
+allocation: capacity
+# deg, cap on the commanded tilt
+max_tilt_deg: 35.0
+
+# ------------------------------------------------------------------------------
+# checks: Pass/fail thresholds of the self-checks (the run exits 0 only if all pass)
+# ------------------------------------------------------------------------------
+# cm, hover position error after the snap
+check_hover_cm: 5.0
+# cm, worst slot error (assembly stays rigid)
+check_slot_cm: 0.5
+# deg, the failure must tilt the assembly more than this ...
+check_upset_deg: 2.0
+# m, ... or drop it more than this
+check_upset_drop: 0.05
+# m, lowest CoM during recovery stays this far above the ground rest height
+check_recover_margin: 0.1
+# cm, final hover error after recovery
+check_final_cm: 5.0
+# cm, worst circle tracking error
+check_circle_cm: 10.0
+# cm, landed CoM height above the ground rest height
+check_land_cm: 2.5
+# deg, landed tilt
+check_land_tilt_deg: 5.0
+# m/s, landed speed
+check_land_speed: 0.05
+
+# ------------------------------------------------------------------------------
+# hover: task: hover (one module on the simulator's stock PID)
+# ------------------------------------------------------------------------------
+# m, hover task: target position
+hover_target: [0.0, 0.0, 1.0]
+# s, hover task: flight time
+hover_duration: 10.0
+# Hz, hover task: stock PID rate (physics runs at freq)
+hover_ctrl_freq: 48
+# m, hover task: final position error check
+hover_tol: 0.05
+
+# ------------------------------------------------------------------------------
+# plume: Live aero isolines in the viewer (needs gui)
+# ------------------------------------------------------------------------------
+# draw live isolines of equal aero force: off, dw (downwash), gnd (ground effect), drag or
+# all. Bare --plume means dw  [choices: off, dw, gnd, drag, all]
+plume: 'off'
+# Hz of sim time, isoline redraw rate
+plume_rate: 20.0
+# isoline levels, multiples of one module's weight W, weakest first
+plume_levels: [0.02, 0.1, 0.5]
+
+# ------------------------------------------------------------------------------
+# logging: Flight log and plots
+# ------------------------------------------------------------------------------
+# plot the flight log at the end (shared Logger, opens a window)
+plot: false
+# open a window that plots the run as it flies: height, horizontal error and tilt of each
+# assembly, against their targets
+live_plot: false
+# Hz of sim time, live plot refresh rate
+live_plot_rate: 5.0
+# save the flight log as .npy into output_folder
+save_log: false
+# Hz, flight log sample rate (used by plot and save_log)
+log_rate: 48

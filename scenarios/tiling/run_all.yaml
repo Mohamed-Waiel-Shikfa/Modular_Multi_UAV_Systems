@@ -1,0 +1,15 @@
+# tiling/run_all: every base scenario of the tiling cage, flying at the same time in one simulation, side by side.
+#
+#   python simulate.py --scenario scenarios/tiling/run_all.yaml --gui
+#   python simulate.py --scenario scenarios/tiling/run_all.yaml --circle
+# Fields set here (and flags) apply to every included scenario; run, physics, plume and logging
+# fields always come from here. Exit code 0 means every check of every scenario passed.
+
+task: dock
+include:
+  - scenarios/tiling/dodecagons/base.yaml
+  - scenarios/tiling/elongated/base.yaml
+  - scenarios/tiling/kagome/base.yaml
+  - scenarios/tiling/octagons/base.yaml
+  - scenarios/tiling/rhombitri/base.yaml
+  - scenarios/tiling/snub/base.yaml

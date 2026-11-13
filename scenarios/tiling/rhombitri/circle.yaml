@@ -1,0 +1,19 @@
+# tiling/rhombitri/circle: 3.4.6.4 tiling: 19 modules, triangles (33 g), squares (212 g) and hexagons (1.2 kg),
+#   each the largest drone its tile holds; face to face, a hexagon at the centre and two rings.
+# Mission: dock, hover, fly `laps` laps of a horizontal circle of `radius`, land.
+#
+#   python simulate.py --scenario scenarios/tiling/rhombitri/circle.yaml
+#   python simulate.py --scenario scenarios/tiling/rhombitri/circle.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/tiling/rhombitri/circle.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: tiling
+tiling: 3.4.6.4
+layout: rings
+size: 2
+drone_scale: fit   # every tile carries the largest Froude-scaled CF2X that fits it
+circle: true
+radius: 1.0
+laps: 2

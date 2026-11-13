@@ -1,0 +1,13 @@
+# box/3x3/base: Nine box-caged modules in a 3 x 3 square, docked face to face.
+# Mission: dock in the air, hover, land.
+#
+#   python simulate.py --scenario scenarios/box/3x3/base.yaml
+#   python simulate.py --scenario scenarios/box/3x3/base.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/box/3x3/base.yaml --size 4
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: box
+layout: square
+size: 3

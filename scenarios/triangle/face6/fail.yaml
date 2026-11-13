@@ -1,0 +1,18 @@
+# triangle/face6/fail: Six triangle-caged modules tiling a hexagon (3 + 3), alternately pointing +y and -y;
+#   neighbours share a full face.
+# Mission: dock, hover, climb to fail_z; chosen modules drop to `outage` x their thrust for outage_t,
+#   the assembly recovers, hovers final_t and lands.
+#
+#   python simulate.py --scenario scenarios/triangle/face6/fail.yaml
+#   python simulate.py --scenario scenarios/triangle/face6/fail.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/triangle/face6/fail.yaml --size 2
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: triangle
+triangle_connect: face
+layout: hexagon
+size: 1
+failure: true
+fail_mask: edge   # the -x end of each row (2 modules)

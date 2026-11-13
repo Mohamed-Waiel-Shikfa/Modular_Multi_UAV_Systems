@@ -1,0 +1,18 @@
+# world/zoo: one assembly of every cage, side by side in one simulation: a 3 x 3 box grid, a tetra
+#   pyramid, face-docked triangles, a hex flower, the 6-DOF dodecahedron ring and a mixed 3.4.6.4
+#   tiling. They take off, dock, fly a circle and land together, without touching each other.
+#
+#   python simulate.py --scenario scenarios/world/zoo.yaml --gui
+#   python simulate.py --scenario scenarios/world/zoo.yaml --sim both
+# Fields set here (and flags) apply to every included scenario; run, physics, plume and logging
+# fields always come from here. Exit code 0 means every check of every scenario passed.
+
+task: dock
+include:
+  - scenarios/box/3x3/base.yaml
+  - scenarios/tetra/4/base.yaml
+  - scenarios/triangle/face6/base.yaml
+  - scenarios/hex/7/base.yaml
+  - scenarios/dodeca/hexa6dof/base.yaml
+  - scenarios/tiling/rhombitri/base.yaml
+circle: true   # applies to all of them

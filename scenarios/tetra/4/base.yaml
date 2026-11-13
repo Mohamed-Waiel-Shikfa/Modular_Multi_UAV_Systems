@@ -1,0 +1,12 @@
+# tetra/4/base: Four tetrahedron-caged modules in a pyramid (3 + 1); neighbours share a cage vertex.
+# Mission: dock in the air, hover, land.
+#
+#   python simulate.py --scenario scenarios/tetra/4/base.yaml
+#   python simulate.py --scenario scenarios/tetra/4/base.yaml --sim mujoco --gui
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: tetra
+layout: pyramid
+size: 2

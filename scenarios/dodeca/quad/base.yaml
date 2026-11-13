@@ -1,0 +1,14 @@
+# dodeca/quad/base: Dodecacopter quadrotor (Garanger et al. 2026, Fig. 13a): four dodecahedron-caged
+#   modules in a rhombus (1 + 2 + 1); neighbours share two vertices. size n: rhombus of side n.
+# Mission: dock in the air, hover, land.
+#
+#   python simulate.py --scenario scenarios/dodeca/quad/base.yaml
+#   python simulate.py --scenario scenarios/dodeca/quad/base.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/dodeca/quad/base.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: dodeca
+layout: rhombus
+size: 2

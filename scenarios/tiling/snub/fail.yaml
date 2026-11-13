@@ -1,0 +1,18 @@
+# tiling/snub/fail: 3.3.4.3.4 (snub square) tiling: 13 modules, squares (212 g) turned +-15 deg and triangles
+#   (33 g); a square at the centre and two rings.
+# Mission: dock, hover, climb to fail_z; chosen modules drop to `outage` x their thrust for outage_t,
+#   the assembly recovers, hovers final_t and lands.
+#
+#   python simulate.py --scenario scenarios/tiling/snub/fail.yaml
+#   python simulate.py --scenario scenarios/tiling/snub/fail.yaml --sim mujoco --gui
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: tiling
+tiling: 3.3.4.3.4
+layout: rings
+size: 2
+drone_scale: fit   # every tile carries the largest Froude-scaled CF2X that fits it
+failure: true
+fail_mask: '0,1,1,0,0,0,0,0,0,0,0,0,0'   # two squares

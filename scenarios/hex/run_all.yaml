@@ -1,0 +1,11 @@
+# hex/run_all: every base scenario of the hex cage, flying at the same time in one simulation, side by side.
+#
+#   python simulate.py --scenario scenarios/hex/run_all.yaml --gui
+#   python simulate.py --scenario scenarios/hex/run_all.yaml --circle
+# Fields set here (and flags) apply to every included scenario; run, physics, plume and logging
+# fields always come from here. Exit code 0 means every check of every scenario passed.
+
+task: dock
+include:
+  - scenarios/hex/7/base.yaml
+  - scenarios/hex/pair/base.yaml

@@ -1,0 +1,18 @@
+# dodeca/tetraquad/fail: Dodecacopter tetrahedron quadrotor (Fig. 13d): four dodecahedron-caged modules, 3 + 1 in two
+#   layers; neighbours share two vertices. size n: pyramid of n layers.
+# Mission: dock, hover, climb to fail_z; chosen modules drop to `outage` x their thrust for outage_t,
+#   the assembly recovers, hovers final_t and lands.
+#
+#   python simulate.py --scenario scenarios/dodeca/tetraquad/fail.yaml
+#   python simulate.py --scenario scenarios/dodeca/tetraquad/fail.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/dodeca/tetraquad/fail.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: dodeca
+layout: pyramid
+size: 2
+hover_t: 5.0   # stacked dodecahedra sit in each other's downwash: the assembly sags ~12 cm after the snap and the integral needs ~4 s
+failure: true
+fail_mask: '1,0,0,0'

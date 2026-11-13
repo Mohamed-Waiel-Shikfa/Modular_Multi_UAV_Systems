@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- Template of docs/fields.html. Edit this file, not docs/fields.html; regenerate with
+     `python -m modular_uav.config.master`. The registry (fields.py) is inlined at the DATA marker. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>simulate.py fields</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --paper: #F2F4F5; --sheet: #FFFFFF; --ink: #18202B; --slate: #5A6675; --rule: #D5DADF;
+  --accent: #2747A3; --mark: #FFE58A; --chip: #E7EBF0;
+  --sans: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11151B; --sheet: #171C23; --ink: #E3E7EC; --slate: #97A2B0; --rule: #2A313B;
+    --accent: #93AEFF; --mark: #5C4A00; --chip: #222934;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11151B; --sheet: #171C23; --ink: #E3E7EC; --slate: #97A2B0; --rule: #2A313B;
+  --accent: #93AEFF; --mark: #5C4A00; --chip: #222934;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.55 var(--sans); }
+a { color: var(--accent); }
+.wrap { display: grid; grid-template-columns: 15rem minmax(0, 1fr); max-width: 72rem; margin: 0 auto; }
+nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 2rem 1.25rem 2rem 1rem; }
+nav h1 { font: 600 1.05rem/1.3 var(--sans); margin: 0 0 .25rem; }
+nav p { color: var(--slate); font-size: .85rem; margin: 0 0 1.5rem; }
+nav h2 { font: 500 .85rem var(--sans); color: var(--slate); margin: 1.5rem 0 .5rem; }
+nav ol { list-style: none; margin: 0; padding: 0; }
+nav li a { display: flex; justify-content: space-between; padding: .2rem .5rem; margin: 0 -.5rem; border-radius: 4px;
+  color: var(--ink); text-decoration: none; font-size: .9rem; }
+nav li a:hover { background: var(--chip); }
+nav li a span { color: var(--slate); font-variant-numeric: tabular-nums; }
+nav li a.empty { color: var(--slate); opacity: .5; }
+.cages { display: flex; flex-wrap: wrap; gap: .35rem; }
+.cages button { font: 400 .85rem var(--mono); padding: .2rem .55rem; border: 1px solid var(--rule); background: var(--sheet);
+  color: var(--ink); border-radius: 999px; cursor: pointer; }
+.cages button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.layouts { font: .8rem/1.5 var(--mono); color: var(--slate); margin-top: .6rem; min-height: 2.4em; }
+main { padding: 2rem 1rem 6rem 2rem; border-left: 1px solid var(--rule); min-height: 100vh; }
+.search { position: sticky; top: 0; background: var(--paper); padding: .75rem 0 1rem; z-index: 2; }
+.search input { width: 100%; font: 400 1.35rem var(--mono); padding: .7rem .9rem; color: var(--ink);
+  background: var(--sheet); border: 1.5px solid var(--rule); border-radius: 6px; }
+.search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+.status { color: var(--slate); font-size: .85rem; margin-top: .45rem; display: flex; justify-content: space-between; gap: 1rem; }
+kbd { font: .8rem var(--mono); border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 3px; padding: 0 .3rem; }
+section { margin-top: 2rem; }
+section h2 { font: 600 1.15rem/1.3 var(--sans); margin: 0; scroll-margin-top: 7rem; }
+section > p { color: var(--slate); margin: .15rem 0 .5rem; }
+dl { margin: 0; }
+.row { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr); gap: .25rem 1.5rem;
+  padding: .8rem 0; border-top: 1px solid var(--rule); }
+dt { min-width: 0; }
+dt button { font: 500 .95rem var(--mono); color: var(--accent); background: none; border: 0; padding: 0; cursor: copy;
+  text-align: left; overflow-wrap: anywhere; }
+dt button:focus-visible, .cages button:focus-visible, nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+dt .kind { display: block; font: .8rem var(--mono); color: var(--slate); overflow-wrap: anywhere; }
+dd { margin: 0; max-width: 62ch; }
+dd .meta { display: flex; flex-wrap: wrap; gap: .35rem .6rem; margin-top: .35rem; font-size: .85rem; color: var(--slate); }
+dd code { font: .85rem var(--mono); background: var(--chip); color: var(--ink); padding: .05rem .35rem; border-radius: 3px; }
+mark { background: var(--mark); color: inherit; border-radius: 2px; }
+.copied { font: .8rem var(--mono); color: var(--slate); }
+.none { padding: 3rem 0; color: var(--slate); }
+@media (max-width: 760px) {
+  .wrap { grid-template-columns: 1fr; }
+  nav { position: static; height: auto; padding: 1.5rem 16px 0; }
+  nav ol { columns: 2; }
+  main { border-left: 0; padding: 0 16px 4rem; }
+  .row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Field groups">
+    <h1>simulate.py fields</h1>
+    <p>Each field is a scenario YAML key and a flag of the same name. Flag beats file beats default.</p>
+    <h2>Groups</h2>
+    <ol id="groups"></ol>
+    <h2>Cage</h2>
+    <div class="cages" id="cages" role="group" aria-label="Show fields for one cage"></div>
+    <div class="layouts" id="layouts"></div>
+  </nav>
+  <main>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search fields: downwash, rows, tilt…" aria-label="Search fields" autocomplete="off" spellcheck="false">
+      <div class="status"><span id="count"></span><span>Press <kbd>/</kbd> to search, <kbd>Esc</kbd> to clear. Click a name to copy its flag.</span></div>
+    </div>
+    <div id="list"></div>
+  </main>
+</div>
+<script>
+const D = {"groups":{"run":"What to run and how to show it","world":"Several scenarios in one simulation, side by side","physics":"Simulator physics and the downwash model","module":"The caged module (a CF2X inside a rigid rod cage)","layout":"The structure the modules dock into","approach":"Approach, snap (docking) and first hover","failure":"Failure segment: chosen modules lose thrust mid-flight","circle":"Circle segment: the assembly flies laps of a horizontal circle","land":"Climb and landing","controller":"Geometric SE(3) controller gains (per module before the snap, assembly after)","checks":"Pass/fail thresholds of the self-checks (the run exits 0 only if all pass)","hover":"task: hover (one module on the simulator's stock PID)","plume":"Live aero isolines in the viewer (needs gui)","logging":"Flight log and plots"},"cages":["box","tetra","triangle","hex","dodeca","tiling"],"layouts":{"box":["square","rows","triangle","rhombus","hexagon"],"tetra":["pyramid"],"triangle":["triangle","rows","square","rhombus","hexagon"],"hex":["hexagon","rows","square","triangle","rhombus"],"dodeca":["rhombus","rows","square","triangle","hexagon","pyramid"],"tiling":["rings"]},"fields":[{"name":"task","group":"run","help":"dock: modules take off, dock into `layout` and fly the mission. hover: one module hovers on the simulator's stock PID (checks the cage model)","default":"dock","kind":"{dock|hover}","choices":["dock","hover"],"cages":[]},{"name":"sim","group":"run","help":"simulator backend: pybullet (gym-pybullet-drones), mujoco (MuJoCo-drones-gym), or both: run the scenario in each, then plot how far apart the two runs are over time (diff_<name>.png in output_folder)","default":"pybullet","kind":"{pybullet|mujoco|both}","choices":["pybullet","mujoco","both"],"cages":[]},{"name":"gui","group":"run","help":"open the simulator viewer and run in real time","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"freq","group":"run","help":"Hz, physics and control rate of the dock task (one physics step per control step)","default":"240","kind":"INT","choices":[],"cages":[]},{"name":"max_t","group":"run","help":"s of sim time, hard stop of a run","default":"900.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"print_every","group":"run","help":"s of sim time between status lines (0 = no status lines)","default":"0.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"record","group":"run","help":"save video with the simulator's own recorder into output_folder (PyBullet: mp4, needs gui; MuJoCo: PNG frames)","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"output_folder","group":"run","help":"folder for logs, plots and recordings","default":"results","kind":"STR","choices":[],"cages":[]},{"name":"include","group":"world","help":"scenario files to run together in this simulation, side by side (each keeps its own fields; this file's other fields and the flags override them all; run, physics, plume and logging fields come from here only). Empty: just this scenario","default":"","kind":"STR[,...]","choices":[],"cages":[]},{"name":"include_gap","group":"world","help":"m, clear space between the footprints of included scenarios (their staging, circles and assemblies), which are laid out on a square-ish grid, so they share the space without touching or feeling each other's downwash","default":"0.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"physics","group":"physics","help":"aero effects on top of rotor thrust: base (none), gnd (ground effect), drag, dw (downwash) or gnd_drag_dw (all three). Maps to the simulator's Physics enum (PYB_* / MJC_*)","default":"gnd_drag_dw","kind":"{base|gnd|drag|dw|gnd_drag_dw}","choices":["base","gnd","drag","dw","gnd_drag_dw"],"cages":[]},{"name":"downwash_model","group":"physics","help":"original: the simulator's own _downwash, untouched (singular when two modules are at equal height). regularised: ours, with the three bounds below (see docs/dock.md, 'Fix: regularised downwash')","default":"regularised","kind":"{original|regularised}","choices":["original","regularised"],"cages":[]},{"name":"dw_thrust_cap","group":"physics","help":"regularised only: cap the downwash peak at the upper module's thrust","default":"true","kind":"[BOOL]","choices":[],"cages":[]},{"name":"dw_dz_ramp","group":"physics","help":"m, regularised only: downwash fades in linearly over this height below the upper rotor plane (0 = no ramp)","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"dw_min_width","group":"physics","help":"m, regularised only: floor on the plume width beta. null = the module's arm length L; 0 = no floor","default":"null","kind":"FLOAT","choices":[],"cages":[]},{"name":"module_collisions","group":"physics","help":"contact between modules: off (none), all (every pair; docked cages touch, so contact fights the welds) or undocked (every pair except those whose cages touch in the docked structure)","default":"undocked","kind":"{off|all|undocked}","choices":["off","all","undocked"],"cages":[]},{"name":"cage","group":"module","help":"cage around each CF2X: box (docked face to face, or half a face between offset rows), tetra (regular tetrahedron, docked vertex to vertex), triangle (triangular prism, see triangle_connect), hex (hexagonal prism, docked face to face), dodeca (regular dodecahedron, docked as in the Dodecacopter: two shared vertices, coplanar faces), tiling (a mix of polygon prisms, see `tiling`) or none (bare CF2X, task: hover only)","default":"box","kind":"{box|tetra|triangle|hex|dodeca|tiling|none}","choices":["box","tetra","triangle","hex","dodeca","tiling","none"],"cages":[]},{"name":"tiling","group":"module","help":"tiling cages: an edge-to-edge tiling of regular polygons, named by the polygons round each vertex. 3.4.6.4 triangles + squares + hexagons, 3.6.3.6 triangles + hexagons, 3.3.3.4.4 and 3.3.4.3.4 triangles + squares, 4.8.8 squares + octagons, 4.6.12 squares + hexagons + 12-gons, 3.12.12 triangles + 12-gons; 4.4.4.4, 3.3.3.3.3.3, 6.6.6 one polygon. Every tile is a module, an n-gon prism docked face to face","default":"3.4.6.4","kind":"{3.4.6.4|4.4.4.4|3.3.3.3.3.3|6.6.6|3.6.3.6|3.3.3.4.4|3.3.4.3.4|4.8.8|4.6.12|3.12.12}","choices":["3.4.6.4","4.4.4.4","3.3.3.3.3.3","6.6.6","3.6.3.6","3.3.3.4.4","3.3.4.3.4","4.8.8","4.6.12","3.12.12"],"cages":["tiling"]},{"name":"tile_edge","group":"module","help":"m, tiling cages: polygon edge shared by every tile (0.23 fits a CF2X in a triangle)","default":"0.23","kind":"FLOAT","choices":[],"cages":["tiling"]},{"name":"rod_density","group":"module","help":"kg/m, tiling cages: rod mass per metre (a 120 mm box cage of 3 g has 2.6 g/m)","default":"0.0026","kind":"FLOAT","choices":[],"cages":["tiling"]},{"name":"drone_scale","group":"module","help":"drone size, as a Froude scale k of the CF2X: lengths x k, mass x k^3, thrust coefficient x k^4 (same thrust-to-weight). A number, or fit: each module type gets the largest drone that clears its cage by cage_clearance (so big tiles carry big drones)","default":"1","kind":"STR","choices":[],"cages":[]},{"name":"cage_color","group":"module","help":"cage RGBA, e.g. 0.9,0.9,0.9,1. null: one colour per module type (amber, teal, pink, ...), so mixed modules stand out","default":"null","kind":"FLOAT[,...]","choices":[],"cages":[]},{"name":"box_size","group":"module","help":"m, box cage x, y, z size (x and y are also the slot pitch)","default":"0.12,0.12,0.05","kind":"FLOAT[,...]","choices":[],"cages":["box"]},{"name":"tetra_edge","group":"module","help":"m, tetra cage edge (also the neighbour distance in a pyramid)","default":"0.31","kind":"FLOAT","choices":[],"cages":["tetra"]},{"name":"triangle_edge","group":"module","help":"m, triangle cage edge","default":"0.23","kind":"FLOAT","choices":[],"cages":["triangle"]},{"name":"triangle_connect","group":"module","help":"edge: every module points the same way (one vertex on +y) and neighbours share a vertical cage edge, one edge length apart. face: modules alternate pointing +y and -y (turned 180 deg about z) and neighbours share a full face, edge / sqrt(3) apart","default":"edge","kind":"{edge|face}","choices":["edge","face"],"cages":["triangle"]},{"name":"hex_edge","group":"module","help":"m, hex cage edge (neighbour distance = sqrt(3) x edge, flat to flat)","default":"0.07","kind":"FLOAT","choices":[],"cages":["hex"]},{"name":"prism_height","group":"module","help":"m, height of the triangle and hex prisms","default":"0.05","kind":"FLOAT","choices":[],"cages":["triangle","hex"]},{"name":"dodeca_edge","group":"module","help":"m, dodeca cage edge (neighbour distance = sqrt(2) x golden ratio x edge)","default":"0.06","kind":"FLOAT","choices":[],"cages":["dodeca"]},{"name":"tilt","group":"module","help":"dodeca: none (every rotor axis vertical) or alternate: each module off the assembly's vertical axis turns onto a cage symmetry that tilts its rotor axis 41.8 deg onto a neighbouring cage vertex, picked so that the tangential tilt alternates in sign around the centre (the 6-DOF hexarotor of Garanger et al. 2026). Modules dock upright and are turned at the snap","default":"none","kind":"{none|alternate}","choices":["none","alternate"],"cages":["dodeca"]},{"name":"cage_mass","group":"module","help":"kg, whole cage, spread over the rods by length","default":"0.003","kind":"FLOAT","choices":[],"cages":[]},{"name":"cage_rod_radius","group":"module","help":"m, rod radius (visual and collision)","default":"0.001","kind":"FLOAT","choices":[],"cages":[]},{"name":"cage_clearance","group":"module","help":"m, the cage must clear every CF2 mesh vertex by at least this","default":"0.005","kind":"FLOAT","choices":[],"cages":[]},{"name":"layout","group":"layout","help":"shape the modules dock into, `size` sets how big. Flat: rows (the `rows` field), square (size x size), triangle (side size), rhombus (side size), hexagon (side size). 3-D (tetra, dodeca): pyramid (tetrahedral stack, size layers). Tilings: rings (the centre tile and `size` rings of docked neighbours)","default":"square","kind":"{rows|square|triangle|rhombus|hexagon|pyramid|rings}","choices":["rows","square","triangle","rhombus","hexagon","pyramid","rings"],"cages":[]},{"name":"size","group":"layout","help":"layout size: side length in modules, or layers of a pyramid","default":"3","kind":"INT","choices":[],"cages":[]},{"name":"rows","group":"layout","help":"layout rows: modules per row, top (+y) row first, every row centred. Box: rows of equal parity line up (full faces), others sit half a cage off (half faces). Triangular lattices (hex, dodeca, triangle): rows always sit half a slot off; a row with the parity of the one above shifts half a slot to +x. Face-docked triangles: counts are triangles per row","default":"2,3,2","kind":"INT[,...]","choices":[],"cages":[]},{"name":"fill","group":"layout","help":"which modules of the shape to keep: solid (all), hollow (those on the convex hull's boundary: a flat shape's outline, a 3-D shape's surface) or frame (those on the hull's edges: the outline, or a 3-D shape's edge skeleton). hexagon 2 + frame = ring of 6","default":"solid","kind":"{solid|hollow|frame}","choices":["solid","hollow","frame"],"cages":[]},{"name":"fractal","group":"layout","help":"levels of self-similar repetition of the (filled) shape: each level puts a copy at every module, scaled up just enough not to overlap. triangle 2 -> Sierpinski triangle (3^L), pyramid 2 -> Sierpinski tetrahedron (4^L), square 3 + frame -> Sierpinski carpet (8^L)","default":"1","kind":"INT","choices":[],"cages":[]},{"name":"start_spacing","group":"approach","help":"m, ground distance between neighbouring module centres at the start","default":"0.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"z0","group":"approach","help":"m, start height of the module CoMs. null = resting on the cage bottom (box, triangle, hex 0.03; tetra 0.07; dodeca 0.09)","default":"null","kind":"FLOAT","choices":[],"cages":[]},{"name":"stage_spacing","group":"approach","help":"m, distance between neighbouring module centres at the staging points, where the modules hold before they close in to dock (the layout scaled up). Never less than stage_gap between the cages' bounding spheres, so the default is the tightest spread stage_gap allows","default":"0.01","kind":"FLOAT","choices":[],"cages":[]},{"name":"stage_gap","group":"approach","help":"m, least clearance between neighbouring cages' bounding spheres at the staging points; raise it for a wider spread, lower it (even 0) for a tighter one","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"meet_z","group":"approach","help":"m, docking height of the assembly CoM","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"stage_clearance","group":"approach","help":"m, lowest cage height at the staging points","default":"0.3","kind":"FLOAT","choices":[],"cages":[]},{"name":"rise_t","group":"approach","help":"s, climb from the ground to the staging points","default":"3.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"close_t","group":"approach","help":"s, contract from the staging points to the slots","default":"4.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"snap_gap","group":"approach","help":"m, every docked pair within this of its slot offset triggers the welds","default":"0.03","kind":"FLOAT","choices":[],"cages":[]},{"name":"snap_timeout","group":"approach","help":"s after rise_t + close_t without a snap: the run stops and fails","default":"5.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"hover_t","group":"approach","help":"s, hover at meet_z after the snap","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"failure","group":"failure","help":"add the failure segment: climb to fail_z, hold, failure, recover, final hover","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"fail_mask","group":"failure","help":"failing modules, one 0/1 per module in map order (1,0,0 or [1, 0, 0] or 100), or edge = the -x edge of the bottom layer","default":"edge","kind":"STR","choices":[],"cages":[]},{"name":"fail_z","group":"failure","help":"m, climb or descend here before the failure","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"hold_t","group":"failure","help":"s, hover at fail_z before the failure","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"outage","group":"failure","help":"fraction of commanded thrust a failing module keeps (0 = motors off)","default":"0.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"outage_t","group":"failure","help":"s, failure duration","default":"0.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"final_t","group":"failure","help":"s, hover after recovery, before landing","default":"3.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"recover_pos_tol","group":"failure","help":"m, 'stable' after a failure: position error below this","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"recover_vel_tol","group":"failure","help":"m/s, 'stable': speed below this","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"recover_tilt_deg","group":"failure","help":"deg, 'stable': tilt below this","default":"3.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"recover_rate_tol","group":"failure","help":"rad/s, 'stable': body rate below this","default":"0.1","kind":"FLOAT","choices":[],"cages":[]},{"name":"circle","group":"circle","help":"add the circle segment after the hover (and after the failure segment)","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"radius","group":"circle","help":"m, circle radius","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"laps","group":"circle","help":"laps around the circle","default":"2.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"lap_t","group":"circle","help":"s, average time per lap (speed follows 1 - cos, peak = 2 x average)","default":"10.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"climb_rate","group":"land","help":"m/s, climb or descent to fail_z","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"land_speed","group":"land","help":"m/s, descent speed above land_slow_below","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"land_speed_low","group":"land","help":"m/s, descent speed below land_slow_below","default":"0.3","kind":"FLOAT","choices":[],"cages":[]},{"name":"land_slow_below","group":"land","help":"m, height where the descent slows down","default":"1.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"pos_wn","group":"controller","help":"rad/s, assembly position loop natural frequency","default":"2.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"module_wn","group":"controller","help":"rad/s, per-module position loop during the approach (stiffer: pushes into the downwash of modules above)","default":"4.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"pos_zeta","group":"controller","help":"position loop damping ratio","default":"0.9","kind":"FLOAT","choices":[],"cages":[]},{"name":"ki_ratio","group":"controller","help":"integral gain KI = ki_ratio wn^3 (s^-3), removes the steady downwash sag. 0 = PD only","default":"0.256","kind":"FLOAT","choices":[],"cages":[]},{"name":"carry_integral","group":"controller","help":"at the snap, start the assembly integral at the mean module integral (keeps the downwash already learnt)","default":"true","kind":"[BOOL]","choices":[],"cages":[]},{"name":"att_wn_rp","group":"controller","help":"rad/s, attitude loop natural frequency, roll and pitch","default":"20.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"att_wn_yaw","group":"controller","help":"rad/s, attitude loop natural frequency, yaw","default":"8.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"att_zeta","group":"controller","help":"attitude loop damping ratio","default":"0.8","kind":"FLOAT","choices":[],"cages":[]},{"name":"allocation","group":"controller","help":"how the assembly controller shares thrust when rotors differ (mixed drone sizes, tilted rotors): capacity (each rotor in proportion to its maximum thrust, so all saturate together) or equal (least-norm thrusts). Identical upright modules keep the prioritised allocation","default":"capacity","kind":"{capacity|equal}","choices":["capacity","equal"],"cages":[]},{"name":"max_tilt_deg","group":"controller","help":"deg, cap on the commanded tilt","default":"35.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_hover_cm","group":"checks","help":"cm, hover position error after the snap","default":"5.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_slot_cm","group":"checks","help":"cm, worst slot error (assembly stays rigid)","default":"0.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_upset_deg","group":"checks","help":"deg, the failure must tilt the assembly more than this ...","default":"2.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_upset_drop","group":"checks","help":"m, ... or drop it more than this","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_recover_margin","group":"checks","help":"m, lowest CoM during recovery stays this far above the ground rest height","default":"0.1","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_final_cm","group":"checks","help":"cm, final hover error after recovery","default":"5.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_circle_cm","group":"checks","help":"cm, worst circle tracking error","default":"10.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_land_cm","group":"checks","help":"cm, landed CoM height above the ground rest height","default":"2.5","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_land_tilt_deg","group":"checks","help":"deg, landed tilt","default":"5.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"check_land_speed","group":"checks","help":"m/s, landed speed","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"hover_target","group":"hover","help":"m, hover task: target position","default":"0.0,0.0,1.0","kind":"FLOAT[,...]","choices":[],"cages":[]},{"name":"hover_duration","group":"hover","help":"s, hover task: flight time","default":"10.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"hover_ctrl_freq","group":"hover","help":"Hz, hover task: stock PID rate (physics runs at freq)","default":"48","kind":"INT","choices":[],"cages":[]},{"name":"hover_tol","group":"hover","help":"m, hover task: final position error check","default":"0.05","kind":"FLOAT","choices":[],"cages":[]},{"name":"plume","group":"plume","help":"draw live isolines of equal aero force: off, dw (downwash), gnd (ground effect), drag or all. Bare --plume means dw","default":"off","kind":"{off|dw|gnd|drag|all}","choices":["off","dw","gnd","drag","all"],"cages":[]},{"name":"plume_rate","group":"plume","help":"Hz of sim time, isoline redraw rate","default":"20.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"plume_levels","group":"plume","help":"isoline levels, multiples of one module's weight W, weakest first","default":"0.02,0.1,0.5","kind":"FLOAT[,...]","choices":[],"cages":[]},{"name":"plot","group":"logging","help":"plot the flight log at the end (shared Logger, opens a window)","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"live_plot","group":"logging","help":"open a window that plots the run as it flies: height, horizontal error and tilt of each assembly, against their targets","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"live_plot_rate","group":"logging","help":"Hz of sim time, live plot refresh rate","default":"5.0","kind":"FLOAT","choices":[],"cages":[]},{"name":"save_log","group":"logging","help":"save the flight log as .npy into output_folder","default":"false","kind":"[BOOL]","choices":[],"cages":[]},{"name":"log_rate","group":"logging","help":"Hz, flight log sample rate (used by plot and save_log)","default":"48","kind":"INT","choices":[],"cages":[]}]};
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+let cage = "all";
+
+function hl(text, words) {
+  let s = esc(text);
+  for (const w of words) {
+    if (!w) continue;
+    s = s.replace(new RegExp("(" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")(?![^<]*>)", "gi"), "<mark>$1</mark>");
+  }
+  return s;
+}
+
+function render() {
+  const words = $("q").value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const keep = f => (cage === "all" || !f.cages.length || f.cages.includes(cage)) &&
+    words.every(w => [f.name, f.group, f.help, f.default, ...f.choices, ...f.cages].join(" ").toLowerCase().includes(w));
+  let html = "", total = 0, nav = "";
+  for (const [g, title] of Object.entries(D.groups)) {
+    const fs = D.fields.filter(f => f.group === g && keep(f));
+    total += fs.length;
+    nav += `<li><a href="#g-${g}" class="${fs.length ? "" : "empty"}">${g}<span>${fs.length}</span></a></li>`;
+    if (!fs.length) continue;
+    html += `<section><h2 id="g-${g}">${g}</h2><p>${esc(title)}</p><dl>` + fs.map(f => {
+      const choices = f.choices.length ? `<span>choices ${f.choices.map(c => `<code>${hl(c, words)}</code>`).join(" ")}</span>` : "";
+      const only = f.cages.length ? `<span>${f.cages.join(", ")} only</span>` : "";
+      return `<div class="row"><dt><button data-f="${f.name}" title="Copy --${f.name} ${esc(f.default)}">--${hl(f.name, words)}</button>` +
+        `<span class="kind">${esc(f.kind)}</span></dt><dd>${hl(f.help, words)}<div class="meta">` +
+        `<span>default <code>${hl(f.default, words)}</code></span>${choices}${only}</div></dd></div>`;
+    }).join("") + "</dl></section>";
+  }
+  $("list").innerHTML = html || `<p class="none">No field matches “${esc(words.join(" "))}”. Clear the search or pick another cage.</p>`;
+  $("groups").innerHTML = nav;
+  $("count").textContent = `${total} of ${D.fields.length} fields`;
+  $("layouts").textContent = cage === "all" ? "" : "layouts: " + D.layouts[cage].join(", ");
+}
+
+$("cages").innerHTML = ["all", ...D.cages].map(c => `<button aria-pressed="${c === "all"}" data-c="${c}">${c}</button>`).join("");
+$("cages").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  cage = b.dataset.c;
+  for (const x of $("cages").children) x.setAttribute("aria-pressed", x === b);
+  render();
+});
+$("q").addEventListener("input", render);
+$("list").addEventListener("click", async e => {
+  const b = e.target.closest("button[data-f]"); if (!b) return;
+  const f = D.fields.find(x => x.name === b.dataset.f);
+  const text = `--${f.name} ${f.default}`;
+  try { await navigator.clipboard.writeText(text); } catch (_) { return; }
+  const note = document.createElement("span");
+  note.className = "copied"; note.textContent = ` copied ${text} (YAML: ${f.name}: ${f.default})`;
+  b.parentNode.querySelector(".copied")?.remove();
+  b.after(note); setTimeout(() => note.remove(), 2500);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement !== $("q")) { e.preventDefault(); $("q").focus(); }
+  if (e.key === "Escape") { $("q").value = ""; render(); $("q").blur(); }
+});
+render();
+</script>
+</body>
+</html>

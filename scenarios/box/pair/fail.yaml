@@ -1,0 +1,16 @@
+# box/pair/fail: Two box-caged modules side by side (module 0 at -x, 1 at +x), docked face to face.
+# Mission: dock, hover, climb to fail_z; chosen modules drop to `outage` x their thrust for outage_t,
+#   the assembly recovers, hovers final_t and lands.
+#
+#   python simulate.py --scenario scenarios/box/pair/fail.yaml
+#   python simulate.py --scenario scenarios/box/pair/fail.yaml --sim mujoco --gui
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: box
+layout: rows
+rows: [2]
+start_spacing: 1.0
+failure: true
+fail_mask: '0,1'

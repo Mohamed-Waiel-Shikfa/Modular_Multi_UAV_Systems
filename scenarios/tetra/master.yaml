@@ -1,0 +1,93 @@
+# tetra/master.yaml: the tetra cage, its layouts and the main switches, at their defaults.
+#
+# What it is: the short view of scenarios/master.yaml for one cage. It lists the cage and
+#   layout fields that matter for tetra cages, plus the mission switches; `cage` and
+#   `layout` are set to tetra and pyramid. Every other field (physics, approach, failure
+#   and circle details, controller gains, checks, ...) keeps the default and explanation
+#   given in scenarios/master.yaml, and can be added here or set with a flag of the same name.
+#   Precedence: flag > scenario file > default.
+# How to use it: copy the keys you want to change into a scenario file, or run it as is
+#   (the pyramid layout of tetra cages docks, hovers and lands in PyBullet):
+#     python simulate.py --scenario scenarios/tetra/master.yaml
+# Generated from modular_uav/config/fields.py by `python -m modular_uav.config.master`.
+#   Edit fields.py, not this file. Units: m, s, rad unless a name says _deg, _cm or _hz.
+
+# ------------------------------------------------------------------------------
+# run: What to run and how to show it
+# ------------------------------------------------------------------------------
+# dock: modules take off, dock into `layout` and fly the mission. hover: one module hovers
+# on the simulator's stock PID (checks the cage model)  [choices: dock, hover]
+task: dock
+# simulator backend: pybullet (gym-pybullet-drones), mujoco (MuJoCo-drones-gym), or both:
+# run the scenario in each, then plot how far apart the two runs are over time
+# (diff_<name>.png in output_folder)  [choices: pybullet, mujoco, both]
+sim: pybullet
+# open the simulator viewer and run in real time
+gui: false
+
+# ------------------------------------------------------------------------------
+# module: The caged module (a CF2X inside a rigid rod cage)
+# ------------------------------------------------------------------------------
+# cage around each CF2X: box (docked face to face, or half a face between offset rows),
+# tetra (regular tetrahedron, docked vertex to vertex), triangle (triangular prism, see
+# triangle_connect), hex (hexagonal prism, docked face to face), dodeca (regular
+# dodecahedron, docked as in the Dodecacopter: two shared vertices, coplanar faces),
+# tiling (a mix of polygon prisms, see `tiling`) or none (bare CF2X, task: hover only)
+# [choices: box, tetra, triangle, hex, dodeca, tiling, none]
+cage: tetra
+# drone size, as a Froude scale k of the CF2X: lengths x k, mass x k^3, thrust coefficient
+# x k^4 (same thrust-to-weight). A number, or fit: each module type gets the largest drone
+# that clears its cage by cage_clearance (so big tiles carry big drones)
+drone_scale: '1'
+# cage RGBA, e.g. 0.9,0.9,0.9,1. null: one colour per module type (amber, teal, pink,
+# ...), so mixed modules stand out
+cage_color: null
+# m, tetra cage edge (also the neighbour distance in a pyramid)
+tetra_edge: 0.31
+# kg, whole cage, spread over the rods by length
+cage_mass: 0.003
+# m, rod radius (visual and collision)
+cage_rod_radius: 0.001
+# m, the cage must clear every CF2 mesh vertex by at least this
+cage_clearance: 0.005
+
+# ------------------------------------------------------------------------------
+# layout: The structure the modules dock into
+# ------------------------------------------------------------------------------
+# shape the modules dock into, `size` sets how big. Flat: rows (the `rows` field), square
+# (size x size), triangle (side size), rhombus (side size), hexagon (side size). 3-D
+# (tetra, dodeca): pyramid (tetrahedral stack, size layers). Tilings: rings (the centre
+# tile and `size` rings of docked neighbours)  [choices: pyramid]
+layout: pyramid
+# layout size: side length in modules, or layers of a pyramid
+size: 3
+# layout rows: modules per row, top (+y) row first, every row centred. Box: rows of equal
+# parity line up (full faces), others sit half a cage off (half faces). Triangular
+# lattices (hex, dodeca, triangle): rows always sit half a slot off; a row with the parity
+# of the one above shifts half a slot to +x. Face-docked triangles: counts are triangles
+# per row
+rows: [2, 3, 2]
+# which modules of the shape to keep: solid (all), hollow (those on the convex hull's
+# boundary: a flat shape's outline, a 3-D shape's surface) or frame (those on the hull's
+# edges: the outline, or a 3-D shape's edge skeleton). hexagon 2 + frame = ring of 6
+# [choices: solid, hollow, frame]
+fill: solid
+# levels of self-similar repetition of the (filled) shape: each level puts a copy at every
+# module, scaled up just enough not to overlap. triangle 2 -> Sierpinski triangle (3^L),
+# pyramid 2 -> Sierpinski tetrahedron (4^L), square 3 + frame -> Sierpinski carpet (8^L)
+fractal: 1
+
+# ------------------------------------------------------------------------------
+# failure: Failure segment: chosen modules lose thrust mid-flight
+# ------------------------------------------------------------------------------
+# add the failure segment: climb to fail_z, hold, failure, recover, final hover
+failure: false
+# failing modules, one 0/1 per module in map order (1,0,0 or [1, 0, 0] or 100), or edge =
+# the -x edge of the bottom layer
+fail_mask: edge
+
+# ------------------------------------------------------------------------------
+# circle: Circle segment: the assembly flies laps of a horizontal circle
+# ------------------------------------------------------------------------------
+# add the circle segment after the hover (and after the failure segment)
+circle: false

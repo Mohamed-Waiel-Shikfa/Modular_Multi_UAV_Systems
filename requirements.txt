@@ -1,0 +1,10 @@
+# Python deps of the master script (python simulate.py). Install into the `drones` env:
+#   pip install -r requirements.txt
+# The two simulators are the upstream repos, checked out as submodules and installed editable.
+-e ./gym-pybullet-drones
+-e ./MuJoCo-drones-gym
+numpy
+scipy
+matplotlib
+pyyaml
+pytest

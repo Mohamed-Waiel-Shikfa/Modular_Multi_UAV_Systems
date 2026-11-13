@@ -1,0 +1,16 @@
+# hex/7/circle: Seven hex-caged modules in a hexagon (2 + 3 + 2, a centre and its ring), docked face to face.
+# Mission: dock, hover, fly `laps` laps of a horizontal circle of `radius`, land.
+#
+#   python simulate.py --scenario scenarios/hex/7/circle.yaml
+#   python simulate.py --scenario scenarios/hex/7/circle.yaml --sim mujoco --gui
+#   python simulate.py --scenario scenarios/hex/7/circle.yaml --size 3
+# Any field of scenarios/master.yaml can be added here or overridden with a flag of the same name.
+# Exit code 0 means every self-check passed.
+
+task: dock
+cage: hex
+layout: hexagon
+size: 2
+circle: true
+radius: 1.0
+laps: 2
